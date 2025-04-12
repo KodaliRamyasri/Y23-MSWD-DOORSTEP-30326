@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require("../models/User");
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs'); // Using bcryptjs
 
 const getCurrentUserId = (req) => {
     const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
@@ -12,7 +12,7 @@ const getCurrentUserId = (req) => {
 const registerUser = async (req, res) => {
     const { name, email, password } = req.body;
     try {
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await bcrypt.hash(password, 10); // bcryptjs hash
         const user = new User({ name, email, password: hashedPassword });
         await user.save();
         res.status(201).json(user);
@@ -27,7 +27,7 @@ const loginUser = async (req, res) => {
         const user = await User.findOne({ email });
         if (!user) return res.status(400).json({ message: 'User not found' });
 
-        const isMatch = await bcrypt.compare(password, user.password);
+        const isMatch = await bcrypt.compare(password, user.password); // bcryptjs compare
         if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
 
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
@@ -53,7 +53,7 @@ const updateUser = async (req, res) => {
     try {
         const updatedData = { name, email };
         if (password) {
-            updatedData.password = await bcrypt.hash(password, 10);
+            updatedData.password = await bcrypt.hash(password, 10); // bcryptjs hash
         }
         const updatedUser = await User.findByIdAndUpdate(userId, updatedData, { new: true });
         res.status(200).json(updatedUser);
