@@ -138,7 +138,7 @@ function OrdersList() {
     thTd: {
       padding: "12px",
       borderBottom: "1px solid #D5D9D9",
-      textAlign: "left",
+      textAlign: "center",
     },
     th: {
       backgroundColor: "#232F3E",

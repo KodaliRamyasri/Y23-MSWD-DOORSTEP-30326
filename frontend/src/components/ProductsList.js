@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { QRCodeSVG } from "qrcode.react";
 
 function ProductsList() {
   const [products, setProducts] = useState([]);
@@ -12,6 +13,8 @@ function ProductsList() {
     category: "",
   });
   const [selectedProductId, setSelectedProductId] = useState(null);
+  const [qrModalOpen, setQrModalOpen] = useState(false);
+  const [qrProduct, setQrProduct] = useState(null);
 
   useEffect(() => {
     fetchProducts();
@@ -93,7 +96,16 @@ function ProductsList() {
     }
   };
 
-  // Styles (Same as Provided)
+  const openQrModal = (product) => {
+    setQrProduct(product);
+    setQrModalOpen(true);
+  };
+
+  const closeQrModal = () => {
+    setQrModalOpen(false);
+    setQrProduct(null);
+  };
+
   const styles = {
     page: {
       fontFamily: "'Amazon Ember', Arial, sans-serif",
@@ -138,7 +150,7 @@ function ProductsList() {
     thTd: {
       padding: "12px",
       borderBottom: "1px solid #D5D9D9",
-      textAlign: "left",
+      textAlign: "center",
     },
     th: {
       backgroundColor: "#232F3E",
@@ -175,7 +187,6 @@ function ProductsList() {
       backgroundColor: "#F0F2F2",
     },
   };
-  
 
   return (
     <div style={styles.page}>
@@ -203,6 +214,7 @@ function ProductsList() {
               <td style={styles.thTd}>
                 <button style={styles.button} onClick={() => openModal(product)}>Edit</button>
                 <button style={styles.button} onClick={() => deleteProduct(product._id)}>Delete</button>
+                <button style={styles.button} onClick={() => openQrModal(product)}>Generate QR</button>
               </td>
             </tr>
           ))}
@@ -230,6 +242,27 @@ function ProductsList() {
               <button style={styles.button} type="submit">{isEdit ? "Update" : "Add"} Product</button>
               <button style={styles.button} type="button" onClick={closeModal}>Close</button>
             </form>
+          </div>
+        </div>
+      )}
+
+      {qrModalOpen && qrProduct && (
+        <div style={styles.modalOverlay}>
+          <div style={styles.modal}>
+            <h2>QR Code for {qrProduct.name}</h2>
+            <QRCodeSVG
+  value={JSON.stringify({
+    name: qrProduct.name,
+    date: new Date(qrProduct.date).toLocaleDateString(),
+    price: qrProduct.price,
+    category: qrProduct.category,
+  })}
+  size={200}
+/>
+
+            <br />
+            <br />
+            <button style={styles.button} onClick={closeQrModal}>Close</button>
           </div>
         </div>
       )}

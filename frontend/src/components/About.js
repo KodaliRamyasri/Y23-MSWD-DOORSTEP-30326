@@ -105,7 +105,7 @@ const About = () => {
       </div>
 
       <div style={styles.buttonContainer}>
-        <Link to="/products" style={styles.link}>
+        <Link to="/" style={styles.link}>
           <button
             style={styles.button}
             onMouseOver={(e) => {

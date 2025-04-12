@@ -1,13 +1,14 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
+import { useAppContext } from "../contexts/AppContext";
 
 const Welcome = () => {
-  const location = useLocation();
-  const { username } = location.state || { username: "Guest" };
+  const { user } = useAppContext(); // pulling user from JWT context
+  const username = user?.name || "Guest";
 
   const styles = {
     container: {
-      background: "#FFFFFF", // Amazon white background
+      background: "#F3F4F6", // soft Amazon-like grey
       minHeight: "100vh",
       display: "flex",
       justifyContent: "center",
@@ -16,35 +17,39 @@ const Welcome = () => {
       fontFamily: "'Amazon Ember', Arial, sans-serif",
     },
     card: {
-      background: "#232F3E", // Amazon dark blue
-      borderRadius: "12px",
-      padding: "40px 50px",
+      background: "#232F3E",
+      borderRadius: "20px",
+      padding: "50px 60px",
       textAlign: "center",
-      boxShadow: "0 8px 20px rgba(0, 0, 0, 0.2)",
-      maxWidth: "500px",
-      color: "#FFFFFF", // White text for contrast
-      border: "1px solid #37475A", // Amazon grey-blue border
+      boxShadow: "0 10px 30px rgba(0, 0, 0, 0.3)",
+      maxWidth: "600px",
+      color: "#FFFFFF",
+      border: "1px solid #37475A",
     },
     heading: {
-      fontSize: "32px",
+      fontSize: "36px",
       fontWeight: "bold",
-      marginBottom: "10px",
-      letterSpacing: "1px",
-      color: "#FF9900", // Amazon orange accent
+      marginBottom: "12px",
+      color: "#FF9900",
     },
     subtext: {
-      fontSize: "18px",
-      color: "#F0C14B", // Amazon gold accent
-      marginTop: "10px",
+      fontSize: "20px",
+      color: "#F0C14B",
+      marginTop: "15px",
     },
   };
 
   return (
     <div style={styles.container}>
-      <div style={styles.card}>
-        <h1 style={styles.heading}>Hello, {username}!</h1>
-        <p style={styles.subtext}>Welcome to the platform!</p>
-      </div>
+      <motion.div
+        style={styles.card}
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
+        <h1 style={styles.heading}>Welcome, {username}!</h1>
+        <p style={styles.subtext}>We're glad to have you on board 🚀</p>
+      </motion.div>
     </div>
   );
 };
