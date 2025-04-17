@@ -385,7 +385,7 @@ mongoose
   .catch((err) => console.error("❌ MongoDB Connection Error:", err));
 
 // Middleware
-app.use(cors({ origin: "https://y23-mswd-doorstep-30326.onrender.com", credentials: true }));
+app.use(cors({ origin: "https://y23-mswd-doorstep-30326-frontend.onrender.com", credentials: true }));
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
