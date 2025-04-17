@@ -36,7 +36,7 @@ function ProductsList() {
 
   const fetchProducts = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/products/all");
+      const res = await axios.get("https://y23-mswd-doorstep-30326.onrender.com/api/products/all");
       setProducts(res.data);
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -89,8 +89,8 @@ function ProductsList() {
     e.preventDefault();
     try {
       const res = isEdit
-        ? await axios.put(`http://localhost:5000/api/products/update/${selectedProductId}`, productForm)
-        : await axios.post("http://localhost:5000/api/products/add", productForm);
+        ? await axios.put(`https://y23-mswd-doorstep-30326.onrender.com/api/products/update/${selectedProductId}`, productForm)
+        : await axios.post("https://y23-mswd-doorstep-30326.onrender.com/api/products/add", productForm);
 
       fetchProducts();
       closeModal();
@@ -102,7 +102,7 @@ function ProductsList() {
 
   const deleteProduct = async (id) => {
     try {
-      const res = await axios.delete(`http://localhost:5000/api/products/delete/${id}`);
+      const res = await axios.delete(`https://y23-mswd-doorstep-30326.onrender.com/api/products/delete/${id}`);
       fetchProducts();
       alert(res.data.message);
     } catch (error) {

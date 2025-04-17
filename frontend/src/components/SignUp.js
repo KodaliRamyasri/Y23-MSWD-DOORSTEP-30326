@@ -172,7 +172,7 @@ const SignUp = () => {
     }
 
     try {
-      const res = await axios.post("http://localhost:5000/api/users/register", {
+      const res = await axios.post("https://y23-mswd-doorstep-30326.onrender.com/api/users/register", {
         name: userData.username,
         email: userData.email,
         password: userData.password,

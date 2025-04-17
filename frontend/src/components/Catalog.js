@@ -6,7 +6,7 @@ const Catalog = () => {
   const handlePDFClick = () => {
     setContent(
       <iframe
-        src="http://localhost:5000/download.pdf"
+        src="https://y23-mswd-doorstep-30326.onrender.com/download.pdf"
         title="PDF Viewer"
         style={styles.contentIframe}
       ></iframe>
@@ -15,7 +15,7 @@ const Catalog = () => {
 
   const handleVideoClick = () => {
     setContent(
-      <video controls src="http://localhost:5000/video.mp4" style={styles.contentVideo}>
+      <video controls src="https://y23-mswd-doorstep-30326.onrender.com/video.mp4" style={styles.contentVideo}>
         Your browser does not support the video tag.
       </video>
     );
@@ -23,7 +23,7 @@ const Catalog = () => {
 
   const handleImageClick = () => {
     setContent(
-      <img src="http://localhost:5000/image.jpg" alt="Displayed content" style={styles.contentImage} />
+      <img src="https://y23-mswd-doorstep-30326.onrender.com/image.jpg" alt="Displayed content" style={styles.contentImage} />
     );
   };
 

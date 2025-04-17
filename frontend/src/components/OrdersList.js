@@ -19,7 +19,7 @@ function OrdersList() {
 
   const fetchOrders = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/orders/all");
+      const res = await axios.get("https://y23-mswd-doorstep-30326.onrender.com/api/orders/all");
       setOrders(res.data);
     } catch (error) {
       console.error("Error fetching orders:", error);
@@ -72,8 +72,8 @@ function OrdersList() {
     e.preventDefault();
     try {
       const res = isEdit
-        ? await axios.put(`http://localhost:5000/api/orders/update/${selectedOrderId}`, orderForm)
-        : await axios.post("http://localhost:5000/api/orders/add", orderForm);
+        ? await axios.put(`https://y23-mswd-doorstep-30326.onrender.com/api/orders/update/${selectedOrderId}`, orderForm)
+        : await axios.post("https://y23-mswd-doorstep-30326.onrender.com/api/orders/add", orderForm);
 
       fetchOrders();
       closeModal();
@@ -85,7 +85,7 @@ function OrdersList() {
 
   const deleteOrder = async (id) => {
     try {
-      const res = await axios.delete(`http://localhost:5000/api/orders/delete/${id}`);
+      const res = await axios.delete(`https://y23-mswd-doorstep-30326.onrender.com/api/orders/delete/${id}`);
       fetchOrders();
       alert(res.data.message);
     } catch (error) {

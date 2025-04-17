@@ -20,7 +20,7 @@ const Feedback = () => {
     setSuccess(false);
   
     try {
-      const { data } = await axios.post("http://localhost:5000/api/feedback/submit", feedback);
+      const { data } = await axios.post("https://y23-mswd-doorstep-30326.onrender.com/api/feedback/submit", feedback);
       console.log("Server Response:", data);
       setSuccess(true);
       alert("✅ Feedback submitted successfully!");
