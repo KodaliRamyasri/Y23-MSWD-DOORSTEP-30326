@@ -18,6 +18,20 @@ function ProductsList() {
 
   useEffect(() => {
     fetchProducts();
+
+    const styleSheet = document.styleSheets[0];
+    styleSheet.insertRule(`
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+    `, styleSheet.cssRules.length);
+    styleSheet.insertRule(`
+      @keyframes scaleIn {
+        from { transform: scale(0.8); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+      }
+    `, styleSheet.cssRules.length);
   }, []);
 
   const fetchProducts = async () => {
@@ -116,11 +130,16 @@ function ProductsList() {
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
+      animation: "fadeIn 1s ease",
     },
     heading: {
       color: "#232F3E",
       fontSize: "2rem",
       fontWeight: "bold",
+      textAlign: "center",
+      marginBottom: "20px",
+    },
+    centerButtonContainer: {
       textAlign: "center",
       marginBottom: "30px",
     },
@@ -132,12 +151,8 @@ function ProductsList() {
       padding: "10px 15px",
       cursor: "pointer",
       margin: "5px",
-      transition: "background-color 0.3s ease, transform 0.2s ease",
       fontWeight: "bold",
-    },
-    buttonHover: {
-      backgroundColor: "#F90",
-      transform: "scale(1.05)",
+      transition: "background-color 0.3s ease, transform 0.2s ease",
     },
     table: {
       width: "80%",
@@ -169,31 +184,47 @@ function ProductsList() {
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
+      animation: "fadeIn 0.4s ease-in-out",
     },
     modal: {
       backgroundColor: "#FFFFFF",
-      padding: "20px",
-      borderRadius: "8px",
-      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-      width: "400px",
+      padding: "30px",
+      borderRadius: "10px",
+      boxShadow: "0 8px 16px rgba(0, 0, 0, 0.3)",
+      width: "500px",
       textAlign: "center",
       border: "1px solid #D5D9D9",
+      animation: "scaleIn 0.4s ease",
     },
     input: {
-      width: "100%",
-      padding: "8px",
+      width: "95%",
+      padding: "12px",
+      margin: "10px 0",
       border: "1px solid #D5D9D9",
-      borderRadius: "5px",
+      borderRadius: "6px",
       backgroundColor: "#F0F2F2",
+      transition: "border-color 0.3s ease",
+    },
+    label: {
+      fontWeight: "bold",
+      marginBottom: "5px",
+      display: "block",
+      textAlign: "left",
+      color: "#232F3E",
+    },
+    formGroup: {
+      marginBottom: "15px",
+      textAlign: "left",
     },
   };
 
   return (
     <div style={styles.page}>
       <h1 style={styles.heading}>PRODUCT MANAGEMENT</h1>
-      <button style={styles.button} onClick={() => openModal()}>Add Product</button>
-      <br />
-      <br />
+      <div style={styles.centerButtonContainer}>
+        <button style={styles.button} onClick={() => openModal()}>Add Product</button>
+      </div>
+
       <table style={styles.table}>
         <thead>
           <tr>
@@ -228,7 +259,9 @@ function ProductsList() {
             <form onSubmit={addOrEditProduct}>
               {Object.keys(productForm).map((field) => (
                 <div key={field} style={styles.formGroup}>
-                  <label>{field.charAt(0).toUpperCase() + field.slice(1)}:</label>
+                  <label style={styles.label}>
+                    {field.charAt(0).toUpperCase() + field.slice(1)}:
+                  </label>
                   <input
                     type={field === "date" ? "date" : field === "price" ? "number" : "text"}
                     name={field}
@@ -239,8 +272,12 @@ function ProductsList() {
                   />
                 </div>
               ))}
-              <button style={styles.button} type="submit">{isEdit ? "Update" : "Add"} Product</button>
-              <button style={styles.button} type="button" onClick={closeModal}>Close</button>
+              <button style={styles.button} type="submit">
+                {isEdit ? "Update" : "Add"} Product
+              </button>
+              <button style={styles.button} type="button" onClick={closeModal}>
+                Close
+              </button>
             </form>
           </div>
         </div>
@@ -251,18 +288,19 @@ function ProductsList() {
           <div style={styles.modal}>
             <h2>QR Code for {qrProduct.name}</h2>
             <QRCodeSVG
-  value={JSON.stringify({
-    name: qrProduct.name,
-    date: new Date(qrProduct.date).toLocaleDateString(),
-    price: qrProduct.price,
-    category: qrProduct.category,
-  })}
-  size={200}
-/>
-
+              value={JSON.stringify({
+                name: qrProduct.name,
+                date: new Date(qrProduct.date).toLocaleDateString(),
+                price: qrProduct.price,
+                category: qrProduct.category,
+              })}
+              size={200}
+            />
             <br />
             <br />
-            <button style={styles.button} onClick={closeQrModal}>Close</button>
+            <button style={styles.button} onClick={closeQrModal}>
+              Close
+            </button>
           </div>
         </div>
       )}
